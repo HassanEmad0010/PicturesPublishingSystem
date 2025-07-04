@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+<changeSet id="8999f970-9ef0-4625-991d-2d6850f29702" author="Hassan Emad">
+    <insert tableName="admins">
+        <column name="user_name" value="admin" >  </column>
+        <column name="password" value="admin123"> </column>
+    </insert>
+
+    <rollback>
+
+    </rollback>
+</changeSet>
+
+</databaseChangeLog>

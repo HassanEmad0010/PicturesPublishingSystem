@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="9d61c5a7-417e-4455-bed4-eb5abede444f" author="Hassan Emad">
+        <createTable tableName="users">
+            <column name="email" type="varchar(100)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="password" type="VARCHAR(50)">
+                <constraints nullable="false"  />
+            </column>
+
+            <column name="is_logged_in" type="boolean"/>
+        </createTable>
+        <rollback>
+            <dropTable tableName="users" />
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+

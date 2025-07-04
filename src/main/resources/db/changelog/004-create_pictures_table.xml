@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="e2c48c40-ed78-4326-a40b-e6d5ea7fdc5c" author="Hassan Emad">
+        <createTable tableName="pictures">
+
+            <column name="id" type="bigint" autoIncrement="true"  >
+                <constraints primaryKey="true" />
+            </column>
+
+            <column name="user_email" type="varchar(100)" >
+            </column>
+
+            <column name="url" type="VARCHAR(100)">
+                <constraints nullable="false"  />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="pictures"
+                baseColumnNames="user_email"
+                constraintName="user_pics"
+                referencedTableName="users"
+                referencedColumnNames="email"/>
+
+        <rollback>
+            <dropTable tableName="pictures" />
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
+
