@@ -39,7 +39,7 @@ public class UserController {
         return userServiceInterface.savePic(pictureDto,pictureDto.userEmail());
     }
 
-    @GetMapping("accepted")
+    @GetMapping("/accepted")
     public List<PictureDto> acceptedPicsApi() {
         return userServiceInterface.acceptedPics();
     }

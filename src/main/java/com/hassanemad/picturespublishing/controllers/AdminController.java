@@ -15,9 +15,9 @@ import java.util.List;
 public class AdminController {
 
     AdminServiceInterface adminServiceInterface;
-    AdminController(AdminService adminService) {
+    AdminController(AdminServiceInterface adminServiceInterface) {
         System.out.println("Admin Controller triggered");
-        this.adminServiceInterface = adminService;
+        this.adminServiceInterface = adminServiceInterface;
     }
 
     @PostMapping("/login")
