@@ -1,9 +1,13 @@
 package com.hassanemad.picturespublishing.services.user;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
-import org.springframework.stereotype.Service;
+import com.hassanemad.picturespublishing.dto.UserDto;
+
+import java.util.List;
 
 
 public interface UserServiceInterface {
-    String savePic(PictureDto pictureDto);
+    boolean logIn(String email, String password);
+    String savePic(PictureDto pictureDto,String email);
+    List<UserDto> listLoggedInUsers();
 }

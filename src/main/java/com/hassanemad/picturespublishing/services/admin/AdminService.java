@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.hassanemad.picturespublishing.factory.AdminFactory.*;
-import static com.hassanemad.picturespublishing.factory.PictureFactory.toPictureDto;
+import static com.hassanemad.picturespublishing.utilities.AdminFactory.*;
+import static com.hassanemad.picturespublishing.utilities.PictureFactory.toPictureDto;
 
 @Component
 @Primary

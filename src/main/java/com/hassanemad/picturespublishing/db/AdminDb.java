@@ -1,17 +1,16 @@
 package com.hassanemad.picturespublishing.db;
 
 import com.hassanemad.picturespublishing.entities.AdminEntity;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PictureDb {
+public class AdminDb {
 
-    public List<PictureEntity> pictureEntities;
-    public PictureDb() {
-    pictureEntities = new ArrayList<>();
+    public List<AdminEntity> adminEntities;
+    public AdminDb() {
+        adminEntities = new ArrayList<>();
     }
 }

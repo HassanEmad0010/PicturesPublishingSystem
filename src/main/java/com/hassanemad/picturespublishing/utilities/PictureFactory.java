@@ -1,4 +1,4 @@
-package com.hassanemad.picturespublishing.factory;
+package com.hassanemad.picturespublishing.utilities;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.entities.PictureEntity;

@@ -25,9 +25,6 @@ public class AdminController {
         return adminServiceInterface.login(adminDto, password);
     }
 
-
-
-
     @GetMapping("/list_uploaded")
     public List<PictureEntity> listUploadedPicsApi() {
         return adminServiceInterface.listUploadedPics();

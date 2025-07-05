@@ -1,11 +1,7 @@
-package com.hassanemad.picturespublishing.factory;
+package com.hassanemad.picturespublishing.utilities;
 
 import com.hassanemad.picturespublishing.dto.AdminDto;
-import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.entities.AdminEntity;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
-
-import java.util.UUID;
 
 public class AdminFactory {
 

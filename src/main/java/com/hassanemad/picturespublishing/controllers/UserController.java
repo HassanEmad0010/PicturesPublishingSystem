@@ -1,24 +1,34 @@
 package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
-import com.hassanemad.picturespublishing.services.admin.AdminService;
+import com.hassanemad.picturespublishing.dto.UserDto;
 import com.hassanemad.picturespublishing.services.user.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.hassanemad.picturespublishing.services.user.UserServiceInterface;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
-    public UserController(UserService userService) {
-        this.userService = userService;
+    private final UserServiceInterface userServiceInterface;
+    public UserController(UserServiceInterface userServiceInterface) {
+        this.userServiceInterface = userServiceInterface;
+    }
+
+    @PostMapping("/login")
+    public boolean loginApi(@RequestParam String email, @RequestParam String password) {
+    return userServiceInterface.logIn(email, password);
+    }
+
+    @GetMapping("/list_logged")
+    public List<UserDto> listLoggedInUsersApi() {
+        return userServiceInterface.listLoggedInUsers();
     }
 
     @PostMapping("/save")
-    public String savePicApi(@RequestBody PictureDto pictureDto) {
-        return userService.savePic(pictureDto);
+    public String savePicApi(@RequestBody PictureDto pictureDto, @RequestParam String email) {
+        return userServiceInterface.savePic(pictureDto,email);
     }
 }
