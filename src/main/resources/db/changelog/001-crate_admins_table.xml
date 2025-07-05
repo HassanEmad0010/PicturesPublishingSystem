@@ -16,6 +16,8 @@
         <column name="password" type="VARCHAR(10)">
             <constraints nullable="false"  />
     </column>
+        <column name="is_logged_in" type="boolean" />
+
     </createTable>
     <rollback>
         <dropTable tableName="admins" />

@@ -2,13 +2,13 @@ package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.dto.UserDto;
-import com.hassanemad.picturespublishing.repos.user.UserRepo;
-import com.hassanemad.picturespublishing.services.user.UserService;
 import com.hassanemad.picturespublishing.services.user.UserServiceInterface;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -17,6 +17,8 @@ public class UserController {
 
     public UserController(UserServiceInterface userServiceInterface) {
         this.userServiceInterface = userServiceInterface;
+    log.info("User Controller triggered");
+    log.info("User Service injected in User Controller");
     }
 
     @PostMapping("/register")
@@ -34,13 +36,6 @@ public class UserController {
         return userServiceInterface.listLoggedInUsers();
     }
 
-    @PostMapping("/save")
-    public String savePicApi(@RequestBody PictureDto pictureDto) {
-        return userServiceInterface.savePic(pictureDto,pictureDto.userEmail());
-    }
 
-    @GetMapping("/accepted")
-    public List<PictureDto> acceptedPicsApi() {
-        return userServiceInterface.acceptedPics();
-    }
+
 }

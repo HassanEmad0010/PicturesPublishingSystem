@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+
+    <changeSet id="090609d8-4ad5-4def-87eb-d546a1ee9999" author="Hassan">
+
+        <update tableName="admins">
+            <column name="is_logged_in" valueBoolean="false"/>
+            <where>user_name = 'admin'</where>
+        </update>
+
+        <rollback>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

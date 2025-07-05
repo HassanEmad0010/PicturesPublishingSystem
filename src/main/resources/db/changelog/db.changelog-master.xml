@@ -6,11 +6,12 @@
         http://www.liquibase.org/xml/ns/dbchangelog 
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <include file="/db/changelog/001-crate_admin_table.xml"/>
-    <include file="/db/changelog/002-add_admin_user.xml"/>
+    <include file="/db/changelog/001-crate_admins_table.xml"/>
+    <include file="/db/changelog/002-add_admins_user.xml"/>
     <include file="/db/changelog/003-create_users_table.xml" />
     <include file="/db/changelog/004-create_pictures_table.xml"/>
-    <include file="/db/changelog/005-create_pictures_table.xml"/>
+    <include file="/db/changelog/005-update_admins_table.xml"/>
+
 
 
 </databaseChangeLog>

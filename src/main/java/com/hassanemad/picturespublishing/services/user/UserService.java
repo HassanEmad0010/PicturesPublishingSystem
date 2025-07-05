@@ -1,7 +1,9 @@
+/*
 package com.hassanemad.picturespublishing.services.user;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.dto.UserDto;
+import com.hassanemad.picturespublishing.entities.User;
 import com.hassanemad.picturespublishing.repos.user.UserRepoInterface;
 import com.hassanemad.picturespublishing.utilities.PictureFactory;
 import com.hassanemad.picturespublishing.utilities.UserFactory;
@@ -14,12 +16,14 @@ import static com.hassanemad.picturespublishing.utilities.PictureFactory.toPictu
 import static com.hassanemad.picturespublishing.utilities.UserFactory.toUserDto;
 import static com.hassanemad.picturespublishing.utilities.UserFactory.toUserEntity;
 
-@Service
+//@Service
 public class UserService implements UserServiceInterface {
     private final UserRepoInterface userRepo;
     public UserService(UserRepoInterface userRepo) {
         this.userRepo = userRepo;
     }
+
+
 
     @Override
     public void registerUser(UserDto userDto ,String password) {
@@ -32,10 +36,6 @@ public class UserService implements UserServiceInterface {
         return userRepo.logIn(email, password);
     }
 
-    @Override
-    public String savePic(PictureDto pictureDto, String email) {
-        return userRepo.savePic(toPictureEntity(pictureDto),email);
-    }
 
     @Override
     public List<UserDto> listLoggedInUsers() {
@@ -48,4 +48,10 @@ public class UserService implements UserServiceInterface {
                 PictureFactory::toPictureDto
         ).toList();
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return null;
+    }
 }
+*/

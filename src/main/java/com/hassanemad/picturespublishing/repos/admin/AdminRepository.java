@@ -2,13 +2,13 @@ package com.hassanemad.picturespublishing.repos.admin;
 
 import com.hassanemad.picturespublishing.db.AdminDb;
 import com.hassanemad.picturespublishing.db.PictureDb;
-import com.hassanemad.picturespublishing.entities.AdminEntity;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
+import com.hassanemad.picturespublishing.entities.Admin;
+import com.hassanemad.picturespublishing.entities.Picture;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
+@Deprecated
 @Component
 @Primary
 public class AdminRepository implements AdminRepositoryInterface {
@@ -19,8 +19,8 @@ public class AdminRepository implements AdminRepositoryInterface {
     public AdminRepository( PictureDb picturesDb, AdminDb adminDb) {
         this.picturesDb = picturesDb;
         this.adminDb = adminDb;
-        AdminEntity adminEntity = new AdminEntity("admin","admin123", false);
-        adminDb.adminEntities.add(adminEntity);
+        Admin admin = new Admin("admin","admin123", false);
+        adminDb.adminEntities.add(admin);
     }
 
 
@@ -31,8 +31,8 @@ public class AdminRepository implements AdminRepositoryInterface {
     }
 
     @Override
-    public PictureEntity updatePicStatus(String picId, boolean status) {
-     PictureEntity pic =   picturesDb.pictureEntities.stream().filter(pictureEntity ->
+    public Picture updatePicStatus(String picId, boolean status) {
+     Picture pic =   picturesDb.pictureEntities.stream().filter(pictureEntity ->
                 pictureEntity.getId().equals(picId)).findFirst().orElse(null);
      if (pic != null) {
          if (status ) {
@@ -46,31 +46,31 @@ public class AdminRepository implements AdminRepositoryInterface {
     }
 
     @Override
-    public PictureEntity getPicDetails(String picId) {
+    public Picture getPicDetails(String picId) {
         return picturesDb.pictureEntities.stream().filter(pictureEntity -> pictureEntity.getId().
                 equals(picId)).findFirst().
                 orElse(null);
     }
 
     @Override
-    public List<PictureEntity> listUploadedPics() {
+    public List<Picture> listUploadedPics() {
         return picturesDb.pictureEntities.stream().filter(pictureEntity -> pictureEntity.getPicStatus().equals("uploaded")).toList();
     }
 
     @Override
-    public AdminEntity login(AdminEntity adminEntity) {
-        if ( adminDb.adminEntities.get(0).getUsername().equals(adminEntity.getUsername())
-                && adminDb.adminEntities.get(0).getPassword().equals(adminEntity.getPassword()) ) {
-            adminEntity.setLoggedIn(true);
-            return adminEntity;
+    public Admin login(Admin admin) {
+        if ( adminDb.adminEntities.get(0).getUsername().equals(admin.getUsername())
+                && adminDb.adminEntities.get(0).getPassword().equals(admin.getPassword()) ) {
+            admin.setLoggedIn(true);
+            return admin;
         }
-        return adminEntity;
+        return admin;
     }
 
     @Override
-    public PictureEntity createPicUrl(PictureEntity pictureEntity) {
-        pictureEntity.setUrl("D/pics/"+pictureEntity.getId());
-        return pictureEntity;
+    public Picture createPicUrl(Picture picture) {
+        picture.setUrl("D/pics/"+ picture.getId());
+        return picture;
     }
 
     @Override

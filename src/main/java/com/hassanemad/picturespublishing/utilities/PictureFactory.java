@@ -1,20 +1,20 @@
 package com.hassanemad.picturespublishing.utilities;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
+import com.hassanemad.picturespublishing.entities.Picture;
 
 import java.util.UUID;
 
 public class PictureFactory {
 
-    public  static PictureEntity toPictureEntity(PictureDto pictureDto){
+    public  static Picture toPictureEntity(PictureDto pictureDto){
 
-        return new PictureEntity(UUID.randomUUID().toString(), pictureDto.userEmail(), "",
+        return new Picture(UUID.randomUUID().toString(), pictureDto.userEmail(), "",
                 "uploaded", pictureDto.category(), pictureDto.description());
     }
-    public  static PictureDto toPictureDto(PictureEntity pictureEntity){
+    public  static PictureDto toPictureDto(Picture picture){
 
-        return new PictureDto(pictureEntity.getUserEmail(), pictureEntity.getCategory(),
-                pictureEntity.getDescription());
+        return new PictureDto(picture.getUserEmail(), picture.getCategory(),
+                picture.getDescription());
     }
 }

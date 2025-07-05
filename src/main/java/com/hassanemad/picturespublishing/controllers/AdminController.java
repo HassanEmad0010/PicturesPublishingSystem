@@ -2,8 +2,7 @@ package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.AdminDto;
 import com.hassanemad.picturespublishing.dto.PictureDto;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
-import com.hassanemad.picturespublishing.services.admin.AdminService;
+import com.hassanemad.picturespublishing.entities.Picture;
 import com.hassanemad.picturespublishing.services.admin.AdminServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,20 +24,6 @@ public class AdminController {
         return adminServiceInterface.login(adminDto, password);
     }
 
-    @GetMapping("/list_uploaded")
-    public List<PictureEntity> listUploadedPicsApi() {
-        return adminServiceInterface.listUploadedPics();
-    }
-
-    @GetMapping("/pic_details")
-    public PictureDto picDetailsApi(@RequestParam String picId) {
-        return adminServiceInterface.getPicDetails(picId);
-    }
-
-    @PostMapping("/process")
-    public PictureEntity processPicApi(@RequestParam String picId, @RequestParam boolean status) {
-        return adminServiceInterface.processPic(picId, status);
-    }
 
 
 }

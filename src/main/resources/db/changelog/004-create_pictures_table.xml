@@ -9,7 +9,7 @@
     <changeSet id="e2c48c40-ed78-4326-a40b-e6d5ea7fdc5c" author="Hassan Emad">
         <createTable tableName="pictures">
 
-            <column name="id" type="bigint" autoIncrement="true"  >
+            <column name="id" type="varchar(100)"   >
                 <constraints primaryKey="true" />
             </column>
 
@@ -19,12 +19,26 @@
             <column name="url" type="VARCHAR(100)">
                 <constraints nullable="false"  />
             </column>
+
+            <column name="category" type="varchar(4)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+
+
         </createTable>
 
         <addForeignKeyConstraint
+                constraintName="user_pics"
                 baseTableName="pictures"
                 baseColumnNames="user_email"
-                constraintName="user_pics"
                 referencedTableName="users"
                 referencedColumnNames="email"/>
 

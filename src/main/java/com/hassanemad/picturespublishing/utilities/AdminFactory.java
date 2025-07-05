@@ -1,16 +1,16 @@
 package com.hassanemad.picturespublishing.utilities;
 
 import com.hassanemad.picturespublishing.dto.AdminDto;
-import com.hassanemad.picturespublishing.entities.AdminEntity;
+import com.hassanemad.picturespublishing.entities.Admin;
 
 public class AdminFactory {
 
-    public static AdminEntity toAdminEntity(AdminDto adminDto, String password){
-    return new AdminEntity(adminDto.userName(),password, false);
+    public static Admin toAdminEntity(AdminDto adminDto, String password){
+    return new Admin(adminDto.userName(),password, false);
     }
 
-    public static AdminDto toAdminDto(AdminEntity adminEntity){
-    return new AdminDto(adminEntity.getUsername(), adminEntity.isLoggedIn());
+    public static AdminDto toAdminDto(Admin admin){
+    return new AdminDto(admin.getUsername(), admin.isLoggedIn());
     }
 
 

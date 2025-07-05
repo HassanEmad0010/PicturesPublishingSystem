@@ -1,16 +1,17 @@
+/*
 package com.hassanemad.picturespublishing.repos.user;
 
-import com.hassanemad.picturespublishing.dto.UserDto;
-import com.hassanemad.picturespublishing.entities.PictureEntity;
-import com.hassanemad.picturespublishing.entities.UserEntity;
+import com.hassanemad.picturespublishing.entities.Picture;
+import com.hassanemad.picturespublishing.entities.User;
 
 import java.util.List;
 
 public interface UserRepoInterface {
-     void registerUser(UserEntity userEntity);
+     void registerUser(User user);
      boolean logIn(String email, String password);
-     String savePic(PictureEntity pictureEntity,String email);
-     List<UserEntity> listLoggedInUsers ();
-     List<PictureEntity> listAcceptedPics ();
+     String savePic(Picture picture, String email);
+     List<User> listLoggedInUsers ();
+     List<Picture> listAcceptedPics ();
 
 }
+*/

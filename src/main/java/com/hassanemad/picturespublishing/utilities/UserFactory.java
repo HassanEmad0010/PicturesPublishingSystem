@@ -1,14 +1,14 @@
 package com.hassanemad.picturespublishing.utilities;
 
 import com.hassanemad.picturespublishing.dto.UserDto;
-import com.hassanemad.picturespublishing.entities.UserEntity;
+import com.hassanemad.picturespublishing.entities.User;
 
 public class UserFactory {
-    public static UserDto toUserDto(UserEntity userEntity){
-        return new UserDto(userEntity.getUserEmail(), userEntity.isLoggedIn());
+    public static UserDto toUserDto(User user){
+        return new UserDto(user.getUserEmail(), user.isLoggedIn());
     }
 
-    public static UserEntity toUserEntity(UserDto userDto, String password){
-        return new UserEntity(userDto.userEmail(), password, userDto.isLoggedIn());
+    public static User toUserEntity(UserDto userDto, String password){
+        return new User(userDto.userEmail(), password, userDto.isLoggedIn());
     }
 }
