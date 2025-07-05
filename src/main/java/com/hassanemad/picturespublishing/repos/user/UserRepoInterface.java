@@ -7,8 +7,10 @@ import com.hassanemad.picturespublishing.entities.UserEntity;
 import java.util.List;
 
 public interface UserRepoInterface {
+     void registerUser(UserEntity userEntity);
      boolean logIn(String email, String password);
      String savePic(PictureEntity pictureEntity,String email);
      List<UserEntity> listLoggedInUsers ();
+     List<PictureEntity> listAcceptedPics ();
 
 }

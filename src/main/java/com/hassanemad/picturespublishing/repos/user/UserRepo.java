@@ -2,12 +2,10 @@ package com.hassanemad.picturespublishing.repos.user;
 
 import com.hassanemad.picturespublishing.db.PictureDb;
 import com.hassanemad.picturespublishing.db.UserDb;
-import com.hassanemad.picturespublishing.dto.UserDto;
 import com.hassanemad.picturespublishing.entities.PictureEntity;
 import com.hassanemad.picturespublishing.entities.UserEntity;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
@@ -16,12 +14,19 @@ public class UserRepo implements UserRepoInterface {
 
     private final PictureDb db ;
     private final UserDb userDb;
+    private final PictureDb pictureDb;
 
-    public UserRepo(PictureDb db, UserDb userDb) {
+    public UserRepo(PictureDb db, UserDb userDb, PictureDb pictureDb) {
         this.db = db;
         this.userDb = userDb;
+        this.pictureDb = pictureDb;
     }
 
+
+    @Override
+    public void registerUser(UserEntity userEntity) {
+          userDb.userEntities.add(userEntity);
+    }
 
     @Override
     public boolean logIn(String email, String password) {
@@ -54,6 +59,14 @@ public class UserRepo implements UserRepoInterface {
     @Override
     public List<UserEntity> listLoggedInUsers() {
         return userDb.userEntities.stream().filter(UserEntity::isLoggedIn).toList();
+    }
+
+    @Override
+    public List<PictureEntity> listAcceptedPics() {
+        return pictureDb.pictureEntities.stream().filter(
+                (pictureEntity)->
+                     "approved".equals(pictureEntity.getPicStatus())
+        ).toList();
     }
 
 }

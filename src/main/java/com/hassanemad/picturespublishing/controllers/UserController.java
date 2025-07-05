@@ -2,6 +2,7 @@ package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.dto.UserDto;
+import com.hassanemad.picturespublishing.repos.user.UserRepo;
 import com.hassanemad.picturespublishing.services.user.UserService;
 import com.hassanemad.picturespublishing.services.user.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,14 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceInterface userServiceInterface;
+
     public UserController(UserServiceInterface userServiceInterface) {
         this.userServiceInterface = userServiceInterface;
+    }
+
+    @PostMapping("/register")
+    public void registerApi(@RequestParam String email, @RequestParam String password) {
+         userServiceInterface.registerUser(new UserDto(email,false), password);
     }
 
     @PostMapping("/login")
@@ -28,7 +35,12 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String savePicApi(@RequestBody PictureDto pictureDto, @RequestParam String email) {
-        return userServiceInterface.savePic(pictureDto,email);
+    public String savePicApi(@RequestBody PictureDto pictureDto) {
+        return userServiceInterface.savePic(pictureDto,pictureDto.userEmail());
+    }
+
+    @GetMapping("accepted")
+    public List<PictureDto> acceptedPicsApi() {
+        return userServiceInterface.acceptedPics();
     }
 }
