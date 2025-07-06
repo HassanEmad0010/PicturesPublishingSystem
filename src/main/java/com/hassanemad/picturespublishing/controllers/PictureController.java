@@ -1,7 +1,6 @@
 package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
-import com.hassanemad.picturespublishing.entities.Picture;
 import com.hassanemad.picturespublishing.services.picture.PictureService;
 import com.hassanemad.picturespublishing.services.picture.PictureServiceInterface;
 import org.springframework.web.bind.annotation.*;

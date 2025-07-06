@@ -4,9 +4,11 @@ import com.hassanemad.picturespublishing.dto.AdminDto;
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.entities.Picture;
 import com.hassanemad.picturespublishing.services.admin.AdminServiceInterface;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -20,7 +22,7 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public AdminDto loginApi(@RequestBody AdminDto adminDto, @RequestParam String password) {
+    public AdminDto loginApi(@RequestBody @Valid AdminDto adminDto, @RequestParam String password) {
         return adminServiceInterface.login(adminDto, password);
     }
 

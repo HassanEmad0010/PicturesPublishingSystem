@@ -1,4 +1,10 @@
 package com.hassanemad.picturespublishing.dto;
 
-public record AdminDto(String userName, boolean isLoggedIn) {
+
+import jakarta.validation.constraints.NotBlank;
+
+public record AdminDto(@NotBlank String userName, boolean isLoggedIn) {
+
+
+
 }
