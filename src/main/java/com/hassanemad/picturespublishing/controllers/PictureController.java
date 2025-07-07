@@ -1,6 +1,7 @@
 package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
+import com.hassanemad.picturespublishing.errors.HappyResponse;
 import com.hassanemad.picturespublishing.services.picture.PictureService;
 import com.hassanemad.picturespublishing.services.picture.PictureServiceInterface;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,13 @@ public class PictureController {
     }
 
     @PostMapping("/save_pic")
-    public String savePicApi(@RequestBody PictureDto pictureDto) {
+    public HappyResponse savePicApi(@RequestBody PictureDto pictureDto) {
         return pictureService.savePic(pictureDto);
     }
 
     @GetMapping("/accepted")
     public List<PictureDto> acceptedPicsApi() {
-        return pictureService.acceptedPics();
+        return pictureService.listAcceptedPics();
     }
 
 

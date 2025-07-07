@@ -2,6 +2,7 @@ package com.hassanemad.picturespublishing.controllers;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
 import com.hassanemad.picturespublishing.dto.UserDto;
+import com.hassanemad.picturespublishing.errors.HappyResponse;
 import com.hassanemad.picturespublishing.services.user.UserServiceInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +23,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void registerApi(@RequestParam String email, @RequestParam String password) {
-         userServiceInterface.registerUser(new UserDto(email,false), password);
+    public HappyResponse registerApi(@RequestParam String email, @RequestParam String password) {
+         return userServiceInterface.registerUser(new UserDto(email,false), password);
     }
 
     @PostMapping("/login")
-    public boolean loginApi(@RequestParam String email, @RequestParam String password) {
+    public HappyResponse loginApi(@RequestParam String email, @RequestParam String password) {
     return userServiceInterface.logIn(email, password);
     }
 

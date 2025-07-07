@@ -1,11 +1,18 @@
 package com.hassanemad.picturespublishing.services.picture;
 
 import com.hassanemad.picturespublishing.dto.PictureDto;
+import com.hassanemad.picturespublishing.dto.UserDto;
 import com.hassanemad.picturespublishing.entities.Picture;
+import com.hassanemad.picturespublishing.enums.PictureEnum;
+import com.hassanemad.picturespublishing.errors.HappyResponse;
+import com.hassanemad.picturespublishing.errors.picture.NoPicturesException;
+import com.hassanemad.picturespublishing.errors.picture.NotLoggedInException;
 import com.hassanemad.picturespublishing.repos.picture.PictureRepoInterfaceJpa;
 import com.hassanemad.picturespublishing.services.user.UserServiceJpa;
 import com.hassanemad.picturespublishing.utilities.PictureFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,52 +30,100 @@ public class PictureService implements PictureServiceInterface {
         this.pictureRepoInterfaceJpa = pictureRepoInterfaceJpa;
     }
 
-    public Optional<Picture> findPictureById(String picId) {
-        return pictureRepoInterfaceJpa.findById(picId);
-    }
 
+
+    @Transactional
     @Override
     public PictureDto processPic(String picId, boolean response) {
-       Optional<Picture> picFound = pictureRepoInterfaceJpa.findById(picId);
-        if (picFound.isPresent() && picFound.get().getPicStatus().equals("uploaded")){
-           picFound.get().setPicStatus(response ? "accepted" : "rejected");
-           pictureRepoInterfaceJpa.save(picFound.get());
-            return toPictureDto(picFound.get());
+       Optional<Picture> picFound = findPictureById(picId);
+        if (picFound.isPresent() && picFound.get().getPicStatus().equals(PictureEnum.UPLOADED.name())){
+            Picture pictureFound= picFound.get();
+            if (!response){
+                rejectPicture(pictureFound);
+                upsert(pictureFound);
+                return toPictureDto(pictureFound);
+            }
+            acceptPicture(pictureFound);
+            upsert(pictureFound);
+            return toPictureDto(pictureFound);
         }
-        return null;
+        throw new NoPicturesException("No uploaded picture for this id: "+picId);
     }
+
 
     @Override
     public Optional <PictureDto> getPicDetails(String picId) {
-       Optional<Picture> picFound = pictureRepoInterfaceJpa.findById(picId);
+       Optional<Picture> picFound = findPictureById(picId);
+       if (picFound.isEmpty()){
+            throw new NoPicturesException("Picture not found");
+       }
        return picFound.map(PictureFactory::toPictureDto);
     }
 
     @Override
     public List<PictureDto> listUploadedPics() {
-        return pictureRepoInterfaceJpa.findAllByPicStatus("uploaded");
+        List<PictureDto> pictureDtoList = listAllPicsByStatus(PictureEnum.UPLOADED) ;
+        if (pictureDtoList.isEmpty()){
+            throw new NoPicturesException("No uploaded pictures yet!");
+        }
+        return pictureDtoList;
     }
 
 
+    @Transactional
     @Override
-    public String savePic(PictureDto pictureDto) {
-        if ( userServiceJpa.listLoggedInUsers().stream().anyMatch(userDto ->
+    public HappyResponse savePic(PictureDto pictureDto) {
+        if ( listLoggedInUsers().stream().anyMatch(userDto ->
                 userDto.userEmail().equals(pictureDto.userEmail()) &&
                         userDto.isLoggedIn()
                 )) {
-            Picture picSaved = pictureRepoInterfaceJpa.save(toPictureEntity(pictureDto));
-            return picSaved.getId()  + " Picture is saved";
+            Picture picToSave = toPictureEntity(pictureDto);
+            upsert(picToSave);
+            return new HappyResponse("Picture: "+picToSave.getId()+ " is saved", "000");
         }
-        return "User is not logged in";
-
+        throw new NotLoggedInException("User is not logged in");
     }
 
     @Override
-    public List<PictureDto> acceptedPics() {
-        return pictureRepoInterfaceJpa.findAllByPicStatus("accepted");
+    public List<PictureDto> listAcceptedPics() {
+        List<PictureDto> picturesDto = listAllPicsByStatus(PictureEnum.ACCEPTED) ;
+        if (picturesDto.isEmpty()){
+            throw  new NoPicturesException("No accepted pictures yet!");
+        }
+        return picturesDto;
+    }
+
+    private Optional<Picture> findPictureById(String picId) {
+        return pictureRepoInterfaceJpa.findById(picId);
+    }
+
+    private List<UserDto> listLoggedInUsers(){
+        return userServiceJpa.listLoggedInUsers();
+    }
+
+    private void acceptPicture( final Picture picture){
+        picture.setPicStatus(PictureEnum.ACCEPTED.name());
+        picture.setUrl("D/Pics/accepted/"+picture.getId().substring(0,4)+".jpg");
+    }
+
+    private void rejectPicture( final Picture picture){
+        picture.setPicStatus(PictureEnum.REJECTED.name());
     }
 
 
+    private void upsert(Picture picture) {
+        pictureRepoInterfaceJpa.save(picture);
+    }
+
+
+    private List<PictureDto> listAllPics(){
+        return pictureRepoInterfaceJpa.findAllByIdNotNull();
+     }
+
+    private List<PictureDto> listAllPicsByStatus(PictureEnum status){
+    return pictureRepoInterfaceJpa.findAllByPicStatus(status.name());
+
+}
 
 
 

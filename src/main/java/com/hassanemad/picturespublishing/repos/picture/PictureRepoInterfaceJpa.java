@@ -9,4 +9,6 @@ import java.util.List;
 public interface PictureRepoInterfaceJpa extends JpaRepository<Picture, String> {
 
     List<PictureDto> findAllByPicStatus(String picStatus);
+    List<PictureDto> findAllByIdNotNull();
+
 }

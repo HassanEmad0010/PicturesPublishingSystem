@@ -2,6 +2,10 @@ package com.hassanemad.picturespublishing.services.user;
 
 import com.hassanemad.picturespublishing.dto.UserDto;
 import com.hassanemad.picturespublishing.entities.User;
+import com.hassanemad.picturespublishing.errors.HappyResponse;
+import com.hassanemad.picturespublishing.errors.user.InvalidCredentialsException;
+import com.hassanemad.picturespublishing.errors.user.NoUserException;
+import com.hassanemad.picturespublishing.errors.user.UserAlreadyFoundExcepion;
 import com.hassanemad.picturespublishing.repos.user.UserRepoJpa;
 import com.hassanemad.picturespublishing.utilities.UserFactory;
 import jakarta.annotation.PreDestroy;
@@ -12,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.hassanemad.picturespublishing.utilities.UserFactory.toUserDto;
 import static com.hassanemad.picturespublishing.utilities.UserFactory.toUserEntity;
 
 @Service
@@ -29,8 +32,14 @@ public class UserServiceJpa implements UserServiceInterface{
     }
 
     @Override
-    public void registerUser(UserDto userDto, String password) {
-        userRepoJpa.save(toUserEntity(userDto,password));
+    public HappyResponse registerUser(UserDto userDto, String password) {
+       User userFound= findUserByEmail(userDto.userEmail());
+       if (userFound == null){
+           userRepoJpa.save(toUserEntity(userDto,password));
+           return new HappyResponse("User registered successfully ", "000");
+       }
+       throw new UserAlreadyFoundExcepion("User email already exists. Please try another email.");
+
     }
 
     @Override
@@ -52,20 +61,34 @@ public class UserServiceJpa implements UserServiceInterface{
     }
 
     @Override
-    public boolean logIn(String email, String password) {
+    public HappyResponse logIn(String email, String password) {
         User userFound = findUserByEmail(email);
-        if (userFound != null && userFound.getPassword().equals(password)){
-            userFound.setLoggedIn(true);
-            userRepoJpa.save(userFound);
-            return true;
+        if (userFound != null){
+            if( userFound.getPassword().equals(password)) {
+                userFound.setLoggedIn(true);
+                userRepoJpa.save(userFound);
+                return new HappyResponse("User logged in successfully", "000");
+            }
+                throw new InvalidCredentialsException("Invalid credentials. Please check your password");
+
         }
-        return false;
+        throw new InvalidCredentialsException("Invalid credentials. Please check your email");
     }
 
     @Override
     public List<UserDto> listLoggedInUsers() {
-        return userRepoJpa.findAll().stream().filter(User::isLoggedIn).map(
+        List<UserDto> usersLoggedFound = userRepoJpa.
+                findAll().
+                stream().
+                filter(User::isLoggedIn).
+                map(
                 UserFactory::toUserDto).toList();
+
+        if (usersLoggedFound.isEmpty()){
+            throw new NoUserException("No Logged in Users");
+        }
+        return usersLoggedFound;
+
     }
 
     //public User isLoggedIn(String email){
